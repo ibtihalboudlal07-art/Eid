@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عيد الأضحى المبارك</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel+Decorative&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: radial-gradient(circle at top, #1b4332, #0f2e22);
+  font-family:'Amiri', serif;
+}
+
+/* Card */
+.card{
+  width:360px;
+  background: linear-gradient(145deg, #ffffff, #f6f1e1);
+  border:1px solid rgba(201,168,76,0.4);
+  border-radius:18px;
+  padding:35px 25px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 25px 60px rgba(0,0,0,0.4);
+  animation:fadeIn 1s ease;
+}
+
+/* Decorative corners */
+.card::before,
+.card::after{
+  content:"";
+  position:absolute;
+  width:120px;
+  height:120px;
+  border:2px solid rgba(201,168,76,0.3);
+}
+
+.card::before{
+  top:-60px;
+  left:-60px;
+  transform:rotate(45deg);
+}
+
+.card::after{
+  bottom:-60px;
+  right:-60px;
+  transform:rotate(45deg);
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(25px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* Title */
+h1{
+  font-size:28px;
+  color:#1b4332;
+  margin-bottom:5px;
+}
+
+.subtitle{
+  font-family:'Cinzel Decorative', serif;
+  font-size:14px;
+  letter-spacing:3px;
+  color:#8b6914;
+  margin-bottom:25px;
+}
+
+/* Line decoration */
+.line{
+  width:60px;
+  height:2px;
+  background:#c9a84c;
+  margin:15px auto;
+  opacity:0.7;
+}
+
+/* Message box */
+.message{
+  background:#f6f1e1;
+  border:1px solid rgba(201,168,76,0.3);
+  padding:15px;
+  border-radius:12px;
+  font-size:15px;
+  color:#333;
+  margin-top:10px;
+}
+
+/* Name */
+.name{
+  margin-top:25px;
+  font-weight:bold;
+  color:#8b6914;
+  letter-spacing:2px;
+  font-size:16px;
+}
+
+/* Glow effect */
+.glow{
+  position:absolute;
+  width:200px;
+  height:200px;
+  background:rgba(201,168,76,0.15);
+  filter:blur(60px);
+  top:-50px;
+  left:50%;
+  transform:translateX(-50%);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="glow"></div>
+
+  <h1>عيد الأضحى المبارك</h1>
+  <div class="subtitle">EID AL-ADHA</div>
+
+  <div class="line"></div>
+
+  <div class="message">
+    تقبل الله منا ومنكم صالح الأعمال، وجعل أيامكم فرح وسعادة وطمأنينة.
+  </div>
+
+  <div class="line"></div>
+
+  <div class="name">IBTIHAL BOUDLAL</div>
+
+</div>
+
+</body>
+</html>

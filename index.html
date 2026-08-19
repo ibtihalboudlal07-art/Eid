@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عيد الأضحى المبارك</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-pale: #FFF8E7;
+    --gold-dark: #8B6914;
+    --green-deep: #1B4332;
+    --green-mid: #2D6A4F;
+    --green-soft: #3A7D5E;
+    --cream: #FDFAF2;
+    --cream-dark: #F5EFD8;
+    --white: #FFFFFF;
+  }
+
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: 'Amiri', serif;
+    background: var(--green-deep);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── Star field background ── */
+  .stars-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    background: var(--gold-light);
+    border-radius: 50%;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.4); }
+  }
+
+  /* ── Geometric border pattern ── */
+  .geo-border {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Main card ── */
+  .card {
+    position: relative;
+    z-index: 10;
+    width: min(680px, 94vw);
+    background: linear-gradient(160deg, var(--cream) 0%, var(--cream-dark) 50%, #EDE3C0 100%);
+    border-radius: 2px;
+    padding: 0;
+    box-shadow:
+      0 0 0 1px var(--gold),
+      0 0 0 8px rgba(201,168,76,0.18),
+      0 0 0 9px var(--gold-dark),
+      0 40px 80px rgba(0,0,0,0.5);
+    overflow: hidden;
+    animation: cardReveal 1.4s cubic-bezier(.22,1,.36,1) both;
+  }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(40px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ── Top ornamental strip ── */
+  .top-strip {
+    background: var(--green-deep);
+    height: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .top-strip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0, transparent 16px,
+      var(--gold) 16px, var(--gold) 18px
+    );
+    opacity: 0.5;
+  }
+
+  /* ── Card inner ── */
+  .card-inner {
+    padding: 40px 48px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ── Bismillah ── */
+  .bismillah {
+    font-family: 'Amiri', serif;
+    font-size: clamp(16px, 3vw, 20px);
+    color: var(--green-deep);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease 0.6s forwards;
+    margin-bottom: 16px;
+  }
+
+  /* ── Top ornament SVG ── */
+  .ornament-top {
+    width: min(420px, 85%);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease 0.8s forwards;
+  }
+
+  /* ── Crescent + star header ── */
+  .moon-star {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: moonReveal 1s ease 1.0s forwards;
+    filter: drop-shadow(0 0 8px rgba(201,168,76,0.5));
+  }
+
+  @keyframes moonReveal {
+    from { opacity: 0; transform: scale(0.5) rotate(-30deg); }
+    to { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  /* ── Arabic main title ── */
+  .title-arabic {
+    font-family: 'Amiri', serif;
+    font-size: clamp(34px, 8vw, 58px);
+    font-weight: 700;
+    color: var(--green-deep);
+    text-align: center;
+    line-height: 1.2;
+    opacity: 0;
+    animation: fadeSlideUp 0.9s ease 1.2s forwards;
+    margin-bottom: 6px;
+    text-shadow: 1px 2px 0 rgba(201,168,76,0.3);
+  }
+
+  .title-arabic span {
+    color: var(--gold-dark);
+  }
+
+  /* ── English title ── */
+  .title-english {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(14px, 3.5vw, 22px);
+    font-weight: 400;
+    color: var(--green-mid);
+    letter-spacing: 0.22em;
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeSlideUp 0.9s ease 1.4s forwards;
+    margin-bottom: 20px;
+    direction: ltr;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    width: min(320px, 80%);
+    height: 24px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 1.6s forwards;
+  }
+
+  /* ── RAM SVG illustration ── */
+  .ram-container {
+    width: min(260px, 68%);
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: ramFloat 1.2s ease 1.8s forwards;
+  }
+
+  @keyframes ramFloat {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ram-container svg {
+    width: 100%;
+    height: auto;
+    animation: floatY 4s ease-in-out 3s infinite;
+    filter: drop-shadow(0 8px 16px rgba(27,67,50,0.25));
+  }
+
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ── Blessing verse ── */
+  .verse-box {
+    background: var(--green-deep);
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    padding: 16px 22px;
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    margin-bottom:14px;
+    opacity: 0;
+    animation: fadeSlideUp 0.9s ease 2.0s forwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .verse-box::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 1px;
+    pointer-events: none;
+  }
+
+  .verse-arabic {
+    font-family: 'Amiri', serif;
+    font-size: clamp(16px, 3.5vw, 22px);
+    color: var(--gold-light);
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  .verse-translation {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(12px, 2.5vw, 15px);
+    color: rgba(240,208,128,0.7);
+    font-style: italic;
+    letter-spacing: 0.03em;
+    direction: ltr;
+    text-align: center;
+  }
+
+  /* ── Decorative lanterns row ── */
+  .lanterns-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeIn 0.9s ease 2.2s forwards;
+  }
+
+  /* ── Bottom ornament ── */
+  .ornament-bottom {
+    width: min(360px, 80%);
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 2.3s forwards;
+  }
+
+  /* ── Wishes text ── */
+  .wishes {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(13px, 2.8vw, 17px);
+    color: var(--green-deep);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.8;
+    direction: ltr;
+    max-width: 440px;
+    opacity: 0;
+    animation: fadeSlideUp 0.9s ease 2.4s forwards;
+    margin-bottom: 28px;
+  }
+
+  /* ── Signature ── */
+  .signature-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: fadeSlideUp 0.9s ease 2.6s forwards;
+  }
+
+  .signature-line {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+ .signature-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 18px;
+  color: #8B6914;
+  letter-spacing: 0.12em;
+  direction: ltr;
+  text-align: center;
+  margin-top: 5px;
+  font-weight: bold;
+}
+  .signature-subtitle {
+    font-family: 'Amiri', serif;
+    font-size: clamp(11px, 2vw, 13px);
+    color: var(--green-mid);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Bottom strip ── */
+  .bottom-strip {
+    background: var(--green-deep);
+    height: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bottom-strip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0, transparent 16px,
+      var(--gold) 16px, var(--gold) 18px
+    );
+    opacity: 0.5;
+  }
+
+  /* ── Sparkles canvas ── */
+  #sparkles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* ── Shared fade animations ── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 480px) {
+    .card-inner { padding: 28px 24px 24px; }
+    .verse-box { padding: 14px 18px; }
+    .lanterns-row { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars layer -->
+<div class="stars-layer" id="stars"></div>
+
+<!-- Sparkle canvas -->
+<canvas id="sparkles"></canvas>
+
+<!-- Greeting card -->
+<div class="card">
+  <div class="top-strip"></div>
+
+  <div class="card-inner">
+
+    <!-- Bismillah -->
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+
+    <!-- Top ornament SVG -->
+    <svg class="ornament-top" viewBox="0 0 420 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="18" x2="140" y2="18" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
+      <line x1="280" y1="18" x2="420" y2="18" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
+      <!-- Center rosette -->
+      <g transform="translate(210,18)">
+        <circle r="10" fill="none" stroke="#C9A84C" stroke-width="0.8"/>
+        <circle r="5" fill="#C9A84C" opacity="0.5"/>
+        <g>
+          <line x1="0" y1="-14" x2="0" y2="14" stroke="#C9A84C" stroke-width="0.6" opacity="0.7"/>
+          <line x1="-14" y1="0" x2="14" y2="0" stroke="#C9A84C" stroke-width="0.6" opacity="0.7"/>
+          <line x1="-10" y1="-10" x2="10" y2="10" stroke="#C9A84C" stroke-width="0.6" opacity="0.4"/>
+          <line x1="10" y1="-10" x2="-10" y2="10" stroke="#C9A84C" stroke-width="0.6" opacity="0.4"/>
+        </g>
+      </g>
+      <!-- Small diamonds -->
+      <g transform="translate(160,18)">
+        <polygon points="0,-6 5,0 0,6 -5,0" fill="#C9A84C" opacity="0.7"/>
+      </g>
+      <g transform="translate(260,18)">
+        <polygon points="0,-6 5,0 0,6 -5,0" fill="#C9A84C" opacity="0.7"/>
+      </g>
+      <g transform="translate(135,18)">
+        <polygon points="0,-4 3,0 0,4 -3,0" fill="#C9A84C" opacity="0.4"/>
+      </g>
+      <g transform="translate(285,18)">
+        <polygon points="0,-4 3,0 0,4 -3,0" fill="#C9A84C" opacity="0.4"/>
+      </g>
+    </svg>
+
+    <!-- Crescent moon + star -->
+    <svg class="moon-star" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Glow -->
+      <circle cx="30" cy="32" r="22" fill="#C9A84C" opacity="0.08"/>
+      <!-- Crescent -->
+      <path d="M32 10 C18 10 8 20 8 34 C8 48 18 58 32 58 C22 52 16 44 16 34 C16 24 22 15 32 10Z" fill="#C9A84C"/>
+      <path d="M32 10 C42 10 52 20 52 34 C52 48 42 58 32 58 C38 52 42 44 42 34 C42 24 38 15 32 10Z" fill="#1B4332"/>
+      <!-- Star -->
+      <g transform="translate(46,16)">
+        <polygon points="0,-7 1.8,-2.2 6.6,-2.2 2.7,0.8 4.1,5.8 0,3 -4.1,5.8 -2.7,0.8 -6.6,-2.2 -1.8,-2.2" fill="#C9A84C"/>
+      </g>
+    </svg>
+
+    <!-- Arabic title -->
+    <div class="title-arabic">عيد <span>الأضحى</span> المبارك</div>
+
+    <!-- English title -->
+    <div class="title-english">Eid Al-Adha Mubarak</div>
+
+    <!-- Divider -->
+    <svg class="divider" viewBox="0 0 320 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="12" x2="100" y2="12" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+      <line x1="220" y1="12" x2="320" y2="12" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+      <g transform="translate(160,12)">
+        <polygon points="0,-8 6,0 0,8 -6,0" fill="none" stroke="#C9A84C" stroke-width="1"/>
+        <polygon points="0,-4 3,0 0,4 -3,0" fill="#C9A84C"/>
+      </g>
+      <g transform="translate(120,12)">
+        <circle r="2.5" fill="#C9A84C" opacity="0.5"/>
+      </g>
+      <g transform="translate(200,12)">
+        <circle r="2.5" fill="#C9A84C" opacity="0.5"/>
+      </g>
+    </svg>
+
+    <!-- Ram illustration SVG -->
+    <div class="ram-container">
+      <svg viewBox="0 0 280 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ground shadow -->
+        <ellipse cx="140" cy="192" rx="75" ry="7" fill="#1B4332" opacity="0.2"/>
+
+        <!-- Body -->
+        <ellipse cx="140" cy="130" rx="62" ry="45" fill="#F5EFD8"/>
+        <!-- Body shading -->
+        <ellipse cx="155" cy="138" rx="42" ry="32" fill="#EDE3C0" opacity="0.6"/>
+
+        <!-- Wool texture on body -->
+        <g opacity="0.35" fill="#2D6A4F">
+          <circle cx="110" cy="115" r="9"/>
+          <circle cx="125" cy="105" r="10"/>
+          <circle cx="143" cy="100" r="11"/>
+          <circle cx="162" cy="107" r="10"/>
+          <circle cx="176" cy="118" r="9"/>
+          <circle cx="178" cy="135" r="9"/>
+          <circle cx="168" cy="148" r="9"/>
+          <circle cx="150" cy="155" r="10"/>
+          <circle cx="130" cy="153" r="10"/>
+          <circle cx="112" cy="144" r="9"/>
+          <circle cx="104" cy="130" r="8"/>
+        </g>
+
+        <!-- Neck -->
+        <ellipse cx="90" cy="108" rx="22" ry="28" fill="#F5EFD8"/>
+        <ellipse cx="90" cy="108" rx="16" ry="22" fill="#EDE3C0" opacity="0.5"/>
+
+        <!-- Head -->
+        <ellipse cx="72" cy="88" rx="30" ry="26" fill="#F5EFD8"/>
+        <ellipse cx="78" cy="92" rx="22" ry="18" fill="#EDE3C0" opacity="0.4"/>
+
+        <!-- Nose / muzzle -->
+        <ellipse cx="52" cy="98" rx="14" ry="10" fill="#E8D8B0"/>
+        <!-- Nostrils -->
+        <ellipse cx="48" cy="100" rx="3" ry="2.5" fill="#C9A884" opacity="0.7"/>
+        <ellipse cx="56" cy="100" rx="3" ry="2.5" fill="#C9A884" opacity="0.7"/>
+
+        <!-- Eyes -->
+        <circle cx="63" cy="82" r="6" fill="#2D6A4F"/>
+        <circle cx="63" cy="82" r="3.5" fill="#1B4332"/>
+        <circle cx="61" cy="80" r="1.5" fill="white"/>
+        <!-- Eyelashes -->
+        <g stroke="#2D6A4F" stroke-width="0.8" opacity="0.6">
+          <line x1="63" y1="76" x2="62" y2="73"/>
+          <line x1="67" y1="77" x2="67" y2="74"/>
+          <line x1="71" y1="79" x2="72" y2="76"/>
+        </g>
+
+        <!-- Ear -->
+        <ellipse cx="95" cy="72" rx="8" ry="14" fill="#EDE3C0" transform="rotate(-20, 95, 72)"/>
+        <ellipse cx="95" cy="73" rx="5" ry="9" fill="#E8C9A0" opacity="0.6" transform="rotate(-20, 95, 73)"/>
+
+        <!-- Horns (curled rams horns) -->
+        <!-- Left horn -->
+        <path d="M76 68 C74 52 60 44 50 50 C40 56 38 72 48 76 C56 80 66 74 68 66" fill="none" stroke="#8B6914" stroke-width="9" stroke-linecap="round"/>
+        <path d="M76 68 C74 52 60 44 50 50 C40 56 38 72 48 76 C56 80 66 74 68 66" fill="none" stroke="#C9A84C" stroke-width="6" stroke-linecap="round"/>
+        <!-- Horn detail lines -->
+        <path d="M73 65 C71 52 60 45 52 50" fill="none" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <path d="M68 63 C66 52 57 46 50 52" fill="none" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+
+        <!-- Right horn (mirror) -->
+        <path d="M90 64 C98 50 116 44 124 52 C132 58 130 74 120 76 C112 78 102 72 98 64" fill="none" stroke="#8B6914" stroke-width="9" stroke-linecap="round"/>
+        <path d="M90 64 C98 50 116 44 124 52 C132 58 130 74 120 76 C112 78 102 72 98 64" fill="none" stroke="#C9A84C" stroke-width="6" stroke-linecap="round"/>
+
+        <!-- Beard -->
+        <ellipse cx="50" cy="107" rx="7" ry="10" fill="#EDE3C0"/>
+        <path d="M46 115 C48 122 52 124 50 118" fill="#D4C4A0" stroke="#C9B080" stroke-width="0.5"/>
+
+        <!-- Legs -->
+        <!-- Front left -->
+        <rect x="100" y="165" width="14" height="26" rx="7" fill="#F5EFD8"/>
+        <rect x="100" y="183" width="14" height="10" rx="4" fill="#D4C4A0"/>
+        <!-- Front right -->
+        <rect x="118" y="165" width="14" height="26" rx="7" fill="#EDE3C0"/>
+        <rect x="118" y="183" width="14" height="10" rx="4" fill="#C9B080"/>
+        <!-- Back left -->
+        <rect x="152" y="165" width="14" height="26" rx="7" fill="#F5EFD8"/>
+        <rect x="152" y="183" width="14" height="10" rx="4" fill="#D4C4A0"/>
+        <!-- Back right -->
+        <rect x="170" y="165" width="14" height="26" rx="7" fill="#EDE3C0"/>
+        <rect x="170" y="183" width="14" height="10" rx="4" fill="#C9B080"/>
+
+        <!-- Tail -->
+        <ellipse cx="200" cy="128" rx="12" ry="10" fill="#F0E8CC"/>
+        <!-- Tail wool -->
+        <g opacity="0.4" fill="#2D6A4F">
+          <circle cx="196" cy="125" r="5"/>
+          <circle cx="203" cy="123" r="5"/>
+          <circle cx="205" cy="131" r="5"/>
+        </g>
+
+        <!-- Gold ribbon / decoration -->
+        <g transform="translate(130,108)">
+          <path d="M-8,-8 L8,-8 L6,8 L-6,8 Z" fill="#C9A84C" opacity="0.85"/>
+          <path d="M-8,-8 L0,-14 L8,-8" fill="#F0D080" opacity="0.7"/>
+          <line x1="-8" y1="-8" x2="8" y2="-8" stroke="#8B6914" stroke-width="0.5"/>
+        </g>
+
+        <!-- Flowers near base -->
+        <g transform="translate(88,178)">
+          <circle cx="0" cy="0" r="4" fill="#C9A84C" opacity="0.7"/>
+          <circle cx="6" cy="-4" r="3" fill="#F0D080" opacity="0.5"/>
+          <circle cx="-6" cy="-3" r="3" fill="#F0D080" opacity="0.5"/>
+        </g>
+        <g transform="translate(180,178)">
+          <circle cx="0" cy="0" r="4" fill="#C9A84C" opacity="0.7"/>
+          <circle cx="5" cy="-4" r="3" fill="#F0D080" opacity="0.5"/>
+          <circle cx="-5" cy="-3" r="3" fill="#F0D080" opacity="0.5"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Blessing verse box -->
+    <div class="verse-box">
+      <div class="verse-arabic">تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ</div>
+      <div class="verse-translation">May Allah accept from us and from you</div>
+    </div>
+
+    <!-- Decorative lanterns row -->
+    <div class="lanterns-row">
+      <svg width="28" height="52" viewBox="0 0 28 52" fill="none">
+        <line x1="14" y1="0" x2="14" y2="6" stroke="#C9A84C" stroke-width="1.5"/>
+        <polygon points="14,6 20,10 22,28 14,32 6,28 8,10" fill="#1B4332" stroke="#C9A84C" stroke-width="1"/>
+        <line x1="6" y1="18" x2="22" y2="18" stroke="#C9A84C" stroke-width="0.7" opacity="0.5"/>
+        <polygon points="14,32 18,34 16,42 14,44 12,42 10,34" fill="#2D6A4F" stroke="#C9A84C" stroke-width="0.8"/>
+        <circle cx="14" cy="52" r="2" fill="#C9A84C" opacity="0.6"/>
+        <!-- Light glow -->
+        <ellipse cx="14" cy="19" rx="5" ry="7" fill="#F0D080" opacity="0.35"/>
+      </svg>
+
+      <svg width="20" height="42" viewBox="0 0 20 42" fill="none">
+        <line x1="10" y1="0" x2="10" y2="4" stroke="#C9A84C" stroke-width="1.2"/>
+        <polygon points="10,4 15,8 17,22 10,26 3,22 5,8" fill="#1B4332" stroke="#C9A84C" stroke-width="0.8"/>
+        <line x1="3" y1="14" x2="17" y2="14" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+        <polygon points="10,26 13,28 12,35 10,37 8,35 7,28" fill="#2D6A4F" stroke="#C9A84C" stroke-width="0.7"/>
+        <circle cx="10" cy="42" r="1.5" fill="#C9A84C" opacity="0.5"/>
+        <ellipse cx="10" cy="15" rx="4" ry="5" fill="#F0D080" opacity="0.35"/>
+      </svg>
+
+      <svg width="34" height="62" viewBox="0 0 34 62" fill="none">
+        <line x1="17" y1="0" x2="17" y2="8" stroke="#C9A84C" stroke-width="2"/>
+        <polygon points="17,8 25,12 28,34 17,40 6,34 9,12" fill="#1B4332" stroke="#C9A84C" stroke-width="1.2"/>
+        <line x1="6" y1="22" x2="28" y2="22" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+        <line x1="8" y1="30" x2="26" y2="30" stroke="#C9A84C" stroke-width="0.6" opacity="0.4"/>
+        <polygon points="17,40 22,43 20,52 17,55 14,52 12,43" fill="#2D6A4F" stroke="#C9A84C" stroke-width="1"/>
+        <circle cx="17" cy="62" r="2.5" fill="#C9A84C" opacity="0.7"/>
+        <ellipse cx="17" cy="23" rx="7" ry="9" fill="#F0D080" opacity="0.4"/>
+      </svg>
+
+      <svg width="20" height="42" viewBox="0 0 20 42" fill="none">
+        <line x1="10" y1="0" x2="10" y2="4" stroke="#C9A84C" stroke-width="1.2"/>
+        <polygon points="10,4 15,8 17,22 10,26 3,22 5,8" fill="#1B4332" stroke="#C9A84C" stroke-width="0.8"/>
+        <line x1="3" y1="14" x2="17" y2="14" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+        <polygon points="10,26 13,28 12,35 10,37 8,35 7,28" fill="#2D6A4F" stroke="#C9A84C" stroke-width="0.7"/>
+        <circle cx="10" cy="42" r="1.5" fill="#C9A84C" opacity="0.5"/>
+        <ellipse cx="10" cy="15" rx="4" ry="5" fill="#F0D080" opacity="0.35"/>
+      </svg>
+
+      <svg width="28" height="52" viewBox="0 0 28 52" fill="none">
+        <line x1="14" y1="0" x2="14" y2="6" stroke="#C9A84C" stroke-width="1.5"/>
+        <polygon points="14,6 20,10 22,28 14,32 6,28 8,10" fill="#1B4332" stroke="#C9A84C" stroke-width="1"/>
+        <line x1="6" y1="18" x2="22" y2="18" stroke="#C9A84C" stroke-width="0.7" opacity="0.5"/>
+        <polygon points="14,32 18,34 16,42 14,44 12,42 10,34" fill="#2D6A4F" stroke="#C9A84C" stroke-width="0.8"/>
+        <circle cx="14" cy="52" r="2" fill="#C9A84C" opacity="0.6"/>
+        <ellipse cx="14" cy="19" rx="5" ry="7" fill="#F0D080" opacity="0.35"/>
+      </svg>
+    </div>
+
+    <!-- Bottom ornament -->
+    <svg class="ornament-bottom" viewBox="0 0 360 28" fill="none">
+      <!-- Islamic geometric band -->
+      <g opacity="0.55" stroke="#8B6914" stroke-width="0.7">
+        <!-- repeating 8-pointed star pattern simplified -->
+        <rect x="0" y="4" width="20" height="20" rx="0" transform="rotate(45,10,14)"/>
+        <rect x="40" y="4" width="20" height="20" rx="0" transform="rotate(45,50,14)"/>
+        <rect x="80" y="4" width="20" height="20" rx="0" transform="rotate(45,90,14)"/>
+        <rect x="120" y="4" width="20" height="20" rx="0" transform="rotate(45,130,14)"/>
+        <rect x="160" y="4" width="20" height="20" rx="0" transform="rotate(45,170,14)"/>
+        <rect x="200" y="4" width="20" height="20" rx="0" transform="rotate(45,210,14)"/>
+        <rect x="240" y="4" width="20" height="20" rx="0" transform="rotate(45,250,14)"/>
+        <rect x="280" y="4" width="20" height="20" rx="0" transform="rotate(45,290,14)"/>
+        <rect x="320" y="4" width="20" height="20" rx="0" transform="rotate(45,330,14)"/>
+      </g>
+      <line x1="0" y1="14" x2="360" y2="14" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+    </svg>
+
+    <!-- Wishes text -->
+    <p class="wishes">
+      May this blessed occasion fill your heart with joy,<br>
+      your home with peace, and your life with Allah's grace.<br>
+      Wishing you and your loved ones a blessed Eid.
+    </p>
+
+    <!-- Signature -->
+    <div class="signature-wrap">
+      <div class="signature-line"></div>
+      <div class="signature-name">Ibtihal Boudlal</div>
+      <div class="signature-subtitle">عيد مبارك وكل عام وأنتم بخير</div>
+      <div class="signature-line"></div>
+    </div>
+
+  </div>
+
+  <div class="bottom-strip"></div>
+</div>
+
+<script>
+// ── Generate starfield ──
+(function() {
+  const layer = document.getElementById('stars');
+  const count = 80;
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 3 + 1;
+    s.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      --dur:${(Math.random()*4+2).toFixed(1)}s;
+      --delay:${(Math.random()*5).toFixed(1)}s;
+    `;
+    layer.appendChild(s);
+  }
+})();
+
+// ── Sparkle particles canvas ──
+(function() {
+  const canvas = document.getElementById('sparkles');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.x = Math.random() * W;
+      this.y = init ? Math.random() * H : H + 10;
+      this.vy = -(Math.random() * 0.8 + 0.3);
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.size = Math.random() * 3.5 + 1;
+      this.life = 0;
+      this.maxLife = Math.random() * 200 + 120;
+      this.color = Math.random() > 0.5 ? '#C9A84C' : '#F0D080';
+      this.type = Math.random() > 0.6 ? 'star' : 'dot';
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life++;
+      if (this.life > this.maxLife || this.y < -20) this.reset(false);
+    }
+    draw() {
+      const alpha = Math.sin((this.life / this.maxLife) * Math.PI);
+      ctx.globalAlpha = alpha * 0.7;
+      ctx.fillStyle = this.color;
+      ctx.strokeStyle = this.color;
+      if (this.type === 'star') {
+        drawStar(ctx, this.x, this.y, 5, this.size, this.size * 0.45);
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawStar(ctx, cx, cy, spikes, outerR, innerR) {
+    let rot = -Math.PI / 2;
+    const step = Math.PI / spikes;
+    ctx.beginPath();
+    for (let i = 0; i < spikes * 2; i++) {
+      const r = i % 2 === 0 ? outerR : innerR;
+      ctx.lineTo(cx + Math.cos(rot) * r, cy + Math.sin(rot) * r);
+      rot += step;
+    }
+    ctx.closePath();
+  }
+
+  // Spawn particles gradually
+  const total = 55;
+  for (let i = 0; i < total; i++) {
+    setTimeout(() => particles.push(new Particle()), i * 80);
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalAlpha = 1;
+    particles.forEach(p => { p.update(); p.draw(); });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+</script>
+</body>
+</html>
